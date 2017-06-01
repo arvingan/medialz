@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no"/>
+    <title>文艺才女</title>
+    <link href="css/iSlider.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #333;
+            overflow: hidden;
+        }
+
+        /*ul wrapper*/
+        #iSlider-wrapper {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            position: absolute;
+        }
+
+        #iSlider-wrapper ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #iSlider-wrapper li {
+            position: absolute;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-pack: center;
+            -webkit-box-align: center;
+            list-style: none;
+        }
+
+        #iSlider-wrapper li img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
+
+</head>
+<body>
+<div id="iSlider-wrapper"></div>
+<div id="hidden-space" style="display:none">
+    <p style="font-size:3em;text-align: center;color:#04f512">A node in dom tree.</p>
+</div>
+<script type="text/javascript" src="js/iSlider.js"></script>
+<script type="text/javascript" src="js/iSlider.animate.js"></script>
+<script id="show-code">
+    var list = [
+        {content: "img/cainv/叶哲清.jpg"},
+        {content: "img/cainv/孙天宇.jpg"},
+        {content: "img/cainv/徐多.jpg"},
+        {content: "img/cainv/郭桦.jpg"},
+        {content: "img/cainv/陆圣叶.jpg"},
+        {content: "img/cainv/顾婉莹.jpg"},
+    ];
+
+    var S = new iSlider(document.getElementById('iSlider-wrapper'), list, {
+        isLooping: 1,
+        isOverspread: 1,
+        isAutoplay: 0,
+        animateTime: 1200,
+        animateType: 'card',
+        isVertical:true
+    });
+</script>
+</body>
+</html>
