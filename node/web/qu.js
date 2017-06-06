@@ -5,21 +5,23 @@ var connection = mysql.createConnection({
   password : '',
   database : 'mojie'
 });
- 
+var quserdata="11";
 
-function queryUser(userId){
-	quserdata="";
+var queryUser= function(userId){
+
 	var userquery =connection.query('SELECT * FROM users WHERE phone = ?', [userId], function(err, results) {
     //return results;
-    //console.log(results[0]);
+    //console.log(quserdata);
     quserdata=results[0];
-    
+    return quserdata;
 	})
-	console.log(quserdata);
+	
 	return quserdata;
 }
+console.log(queryUser(18017057704));
+
 //var userId = 18017057704;
-exports.qUser=queryUser;
+//exports.qUser=queryUser;
 //console.log(userquery);
 // SELECT * FROM users WHERE id = 1, name = 'test'
-//connection.end();
+connection.end();
