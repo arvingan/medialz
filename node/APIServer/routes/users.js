@@ -3,7 +3,7 @@ var express = require('express');
 var router = express.Router();
 
 var URL = require('url');
-router.get('/getUserInfo', function(req, res, next) {
+router.get('/queryPhone', function(req, res, next) {
 
     var user = new User();
     var params = URL.parse(req.url, true).query;
