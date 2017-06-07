@@ -1,8 +1,17 @@
-var mysqldata = require('mysql');
-var connection = mysqldata.createConnection({
-	host: 'localhost',
+module.exports = {
+  mysql: {
+    host: 'localhost',
 	user: 'root',
 	password: '',
 	database: 'mojie'
-});
-module.exports = connection;
+  }
+};
+
+//var mysqldata = require('mysql');
+//var connection = mysqldata.createConnection({
+//	host: 'localhost',
+//	user: 'root',
+//	password: '',
+//	database: 'mojie'
+//});
+//module.exports = connection;
