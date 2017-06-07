@@ -2,11 +2,11 @@ var express = require('express');
 var router = express.Router();
 //配置数据库
 var mysql = require('mysql');
-var config = require('./config/mysql');
+var config = require('../config/mysql');
 var connection = mysql.createConnection(config.mysqlConfig);
 //连接
 var URL = require('url');
-router.get('', function(req, res, next) {
+router.get('/phone', function(req, res, next) {
 	var params = URL.parse(req.url, true).query;
 	if(typeof(params.phone) != "undefined") {
 		connection.query('SELECT * FROM users WHERE phone = ?', [params.phone], function(err, results) {
