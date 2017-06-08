@@ -74,7 +74,7 @@
 				<button type="button" class="button" V-on:click="rFun()">登记信息</button>
 			</div>
 			<div class="input-box">
-				<table border="0" cellspacing="0" cellpadding="0">
+				<table id="qbox" border="0" cellspacing="0" cellpadding="0">
 					<tr>
 						<td class="input-name"><i>(必填)</i>手机号:</td>
 						<td><input type="number" v-model="userdata.phone" id="qphone" class="reInput" reInput="20;/^.{6,20}$/;请输入手机号" /></td>
@@ -132,7 +132,7 @@
 				},
 				qFun: function() {
 					if(RegExpInput.eachREIfunTF({
-							Inputobj: $('#rbox').find('.reInput')
+							Inputobj: $('#qbox').find('.reInput')
 						})) {
 						qFuntext = "phone=" + this.userdata.phone +
 							"&sessionid=1"

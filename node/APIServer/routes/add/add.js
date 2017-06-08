@@ -124,7 +124,7 @@ router.get('/join', function(req, res, next) {
 				//未注册
 				var response = {
 					status: 3000,
-					data: "未注册"
+					hint: "未注册"
 				};
 				res.send(JSON.stringify(response));
 
