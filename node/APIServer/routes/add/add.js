@@ -41,7 +41,7 @@ router.get('/register', function(req, res, next) {
 						var response = {
 							status: 4000,
 							hint: "注册失败",
-							data:regiserData.phone+"+"+regiserData.name
+							data:regiserData
 						};
 						res.send(JSON.stringify(response));
 

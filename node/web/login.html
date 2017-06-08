@@ -80,7 +80,13 @@
 						<td><input type="number" v-model="userdata.phone" id="qphone" class="reInput" reInput="20;/^.{6,20}$/;请输入手机号" /></td>
 					</tr>
 				</table>
-				<button type="button" class="button">取号/查号</button>
+				<button type="button" class="button" V-on:click="qFun()">取号/查号</button>
+			</div>
+			<div class="input-box" id="queuenumber" style="display: none;">
+				<div id="" style="text-align: center;font-size: 20px;">
+					{{userdata.name}}
+				</div>
+				<div style="text-align: center;font-size: 20px;">第<span style="font-size: 32px;font-weight: bold;color: red;">{{userdata.queuenumber}}</span>号</div>
 			</div>
 		</div>
 
@@ -100,6 +106,7 @@
 					sex: "0",
 					size: { a: '', b: '', c: '' },
 					job: { a: '', b: '' },
+					queuenumber:''
 				},
 
 			},
@@ -107,16 +114,35 @@
 				rFun: function() {
 					if(RegExpInput.eachREIfunTF({
 							Inputobj: $('#rbox').find('.reInput')
-						})) {
+					})) {
 						rFuntext = "phone=" + this.userdata.phone +
 							"&name=" + this.userdata.name +
 							"&sex=" + this.userdata.sex +
-							"&size=" + this.userdata.size.a+"/"+this.userdata.size.b+"/"+this.userdata.size.c+
-							"&job=" + this.userdata.job.a+"/"+this.userdata.job.b
+							"&size=" + this.userdata.size.a+"and"+this.userdata.size.b+"and"+this.userdata.size.c+
+							"&job=" + this.userdata.job.a+"and"+this.userdata.job.b
 						this.$http.get("http://39.108.14.253:3000/a/register?" + rFuntext, )
 							.then((successCallback, errorCallback) => {
 								if(successCallback.data.status == "0000") {
 									alert(successCallback.data.hint)
+								}else{
+									alert(successCallback.data.hint)
+								}
+							})
+					}
+				},
+				qFun: function() {
+					if(RegExpInput.eachREIfunTF({
+							Inputobj: $('#rbox').find('.reInput')
+						})) {
+						qFuntext = "phone=" + this.userdata.phone +
+							"&sessionid=3"
+						this.$http.get("http://39.108.14.253:3000/a/join?" + qFuntext, )
+							.then((successCallback, errorCallback) => {
+								if(successCallback.data.status == "0000") {
+									$("#queuenumber").show();
+									name: "11",
+									this.userdata.name=successCallback.data.data.name;
+									this.userdata.queuenumber=successCallback.data.data.queuenumber;
 								}else{
 									alert(successCallback.data.hint)
 								}
