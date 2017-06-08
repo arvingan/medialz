@@ -1,157 +1,128 @@
 <!DOCTYPE html>
-<html lang="en">
 <html>
-<head>
-<meta charset="utf-8">
-<meta name="viewport"   content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes">
-<!-- Declare page as iDevice WebApp friendly -->
-<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<html>
 
-<title>Login page</title>
-<style type="text/css">
-	sup {
-		color:red;
-	}
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width">
+		<meta name="MobileOptimized" content="420">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta name="screen-orientation" content="portrait">
+		<meta name="x5-orientation" content="portrait">
+		<meta name="renderer" content="webkit">
+		<meta content="telephone=no" name="format-detection">
+		<title>登录</title>
+		<link rel="stylesheet" href="styles/css/public.css" />
+		<link rel="stylesheet" href="lib/dialog/ui-dialog.css" />
+		<script type="text/javascript" src="lib/jq/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="lib/vue/vue.js"></script>
+		<script type="text/javascript" src="lib/vue/vue-resource.js"></script>
+		<script type="text/javascript" src="styles/js/config.js"></script>
+		<script type="text/javascript" src="lib/dialog/dialog-plus-min.js"></script>
+		<script type="text/javascript" src="lib/dialog/dialog-fun.js"></script>
+	</head>
 
-	body {
-		background-color:rgb(200,200,200);
+	<body>
 
-	}
-	div {
-		background-color:rgb(80,80,80);
-		color:white;
-		padding:10px;
-	}
-	p {
-		background-color:black;
-		padding:10px;
-	}
-	.first{
-		color:white;
-		text-align:inherit;
-		font-size:30px;
-		/*居中*/
-		margin: 0 auto;
+		<div class="header">
+			<div class="logo-box"></div>
+			<div class="header-text">
+				XX排号系统
+			</div>
+		</div>
 
-	}
-	span{
-		text-align: center;
-	}
-	h5{
-		text-align:center;
-	}
-.divcss5{ border:30px solid rgb(200,200,200); width:300px; height:280px;padding:10px;margin: 0 auto;}
-.divcss6{ border:30px solid rgb(200,200,200); width:300px; height:45px;margin: 0 auto;}
-</style>
-</head>
-<body>
+		<div class="content" id="rapp">
+			<div class="input-box">
+				<table id="rbox" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td class="input-name"><i>(必填)</i>手机号:</td>
+						<td><input type="number" v-model="userdata.phone" id="rphone" class="reInput" reInput="20;/^.{6,20}$/;请输入手机号" /></td>
+					</tr>
+					<tr>
+						<td class="input-name"><i>(必填)</i>姓名:</td>
+						<td><input type="text" v-model="userdata.name" id="rname" class="reInput" reInput="20;/^.{1,20}$/;请输入姓名" /></td>
+					</tr>
+					<tr>
+						<td class="input-name">性别:</td>
+						<td class="sex-box">
+							<label><input type="radio" name="sex" value="0" v-model="userdata.sex" />女</label>
+							<label><input type="radio" name="sex" value="1" v-model="userdata.sex" />男</label>
 
-<p class="first"><img src="https://github.com/magebbb/photo/blob/master/Image%206-5-17%20at%204.40%20PM.jpg?raw=true" width="80" height="40" />&nbsp;&nbsp;&nbsp;面试人员登记</p>
-<h5>首次使用本站者请填写以下资料：</h5>
-<div class="divcss5">
-<fieldset>
-<legend align="middle">面试者基本信息</legend>
-<!-- 登记表单 -->
-<form   method="post"   action="haoma.php" onclick="myFunction()">
-	<tr>
-	<label for="username">姓名<sup>*</sup>:</br ></tr>
-	<tr>
-  <input type="text" name="username"/></br ></tr>
-	<tr>
-	<label for="cellphone">手机号码<sup>*</sup>:</br ></tr>
-	<tr>
-	<input id="cellphone" type="text" name="cellphone" /></br ></tr>
-	<tr>
-	<label for="gender">性别<sup>*</sup>:</br ></tr>
-	<tr>
-	<label for="male">男
- 	<input type="radio" name="gender" id="male" />
- 	<label for="female">女</label>
- 	<input type="radio" name="gender" id="female" /></tr>
-	<label for="female">其他</label>
-	<input type="radio" name="gender" id="else" /></tr>
-	</br >
-	<tr>
-	<label for="bwh">三围:</br ></tr>
-	<tr>
-	<input type="text" name="bwh" id="bust" size="4"/><strong>/</strong><input type="text" name="bwh" id="waist" size="4"/><strong>/</strong><input type="text" name="bwh" id="hip" size="4"/>
-	</br ></tr>
-	<tr>
-	<label for="interview">面试内容<sup>*</sup>:</br ></tr>
-	<tr><label>coser</label>
-	 <input type="checkbox" value="1"  name="interview" />
-	 <label>showgirl</label>
-	 <input type="checkbox" value="2"  name="interview" /></tr>
+							<label><input type="radio" name="sex" value="2" c />其他</label>
+						</td>
 
-</form>
-<!-- 调整手机屏幕 -->
-<script>
-var _width = parseInt(window.screen.width);
-var scale = _width/640;
-var ua = navigator.userAgent.toLowerCase();
-var result = /android (\d+\.\d+)/.exec(ua);
-if (result){
-var version = parseFloat(result[1]);
-if(version>2.3){
-document.write('<meta name="viewport" content="width=640, minimum-scale = '+scale+', maximum-scale = '+scale+', target-densitydpi=device-dpi">');
-}else{
-document.write('<meta name="viewport" content="width=640, target-densitydpi=device-dpi">');
-}
-} else {
-document.write('<meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">');
-}
-</script>
-<!-- 验证用户手机号 -->
-<script>
-function myFunction()
-{
-var x=document.getElementById("cellphone").value;
-var y=document.getElementById("cellphone").value.length;
-if(x==""||isNaN(x)||y!=11)
-	{
-	alert("请输入正确的手机号");
-	}
-}
-function validate_required(field,alerttxt)
-{
-with (field)
-{
-if (value==null||value=="")
-  {alert(alerttxt);return false}
-else {return true}
-}
-}
-</script>
-</fieldset>
-&nbsp;&nbsp;&nbsp;<span><input type="submit" value="确认" onclick="谢谢"></span>
-</div>
+					</tr>
+					<tr>
+						<td class="input-name">三维:</td>
+						<td>
+							<input type="number" style="width: 55px;" v-model="userdata.size.a" /> /
+							<input type="number" style="width:55px;" v-model="userdata.size.b" /> /
+							<input type="number" style="width:55px;" v-model="userdata.size.c" />
+						</td>
+					</tr>
+					<tr>
+						<td class="input-name">面试内容:</td>
+						<td class="sex-box">
+							<label><input type="checkbox" name="job" value="coser" v-model="userdata.job.a" />coser</label>
+							<label><input type="checkbox" name="job" value="showgirl" v-model="userdata.job.b" />showgirl</label>
+						</td>
+					</tr>
+				</table>
+				<button type="button" class="button" V-on:click="rFun()">登记信息</button>
+			</div>
+			<div class="input-box">
+				<table border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td class="input-name"><i>(必填)</i>手机号:</td>
+						<td><input type="number" v-model="userdata.phone" id="qphone" class="reInput" reInput="20;/^.{6,20}$/;请输入手机号" /></td>
+					</tr>
+				</table>
+				<button type="button" class="button">取号/查号</button>
+			</div>
+		</div>
 
-<h5>登记用户输入手机号码可直接取号或查询你已取的号码：</h5>
-<div class="divcss6">
-<form   method="post"   action="changci.php">
-&nbsp;&nbsp;<label for="cellphone">手机号码:</label>
-<input id="haoma" type="text" name="cellphone" />
-<br />
-<!-- 排号，每个手机号码只能给一个面试号码 -->
-&nbsp;&nbsp;<input type="submit" value="取号">
-<!-- 查询手机号码 -->
-&nbsp;&nbsp;&nbsp;<span><input type="submit" value="查看号码" ></span>
-</form>
-</div>
+		<p style="font-size:15px;text-align: center;">© 2017 立洲传媒 ❖ Powered by medialz <br /><i>登记如遇问题请联系现场相关人员</i></p>
 
-</br ></br ></br ></br >
-</br ></br ></br ></br >
-</br ></br ></br ></br >
-</br ></br ></br ></br >
-</br ></br ></br ></br >
-</br ></br ></br ></br >
-</br ></br ></br ></br >
-<!-- footer -->
+	</body>
+	<script>
+		Vue.http.options.headers = {
+			'Content-Type': 'application/x-www-form-urlencoded'
+		};
+		var loginApp = new Vue({
+			el: "#rapp",
+			data: {
+				userdata: {
+					phone: "18017057704",
+					name: "11",
+					sex: "0",
+					size: { a: '', b: '', c: '' },
+					job: { a: '', b: '' },
+				},
 
-			<p style="font-size:15px;color:white">© 2017 立洲传媒 ❖ Powered by medialz <br />备注：登记如遇问题请联系现场相关人员</p><script>
-document.write(Date());
-</script>
+			},
+			methods: {
+				rFun: function() {
+					if(RegExpInput.eachREIfunTF({
+							Inputobj: $('#rbox').find('.reInput')
+						})) {
+						rFuntext = "phone=" + this.userdata.phone +
+							"&name=" + this.userdata.name +
+							"&sex=" + this.userdata.sex +
+							"&size=" + JSON.stringify(this.userdata.size) +
+							"&jobs=" + JSON.stringify(this.userdata.job);
+						this.$http.get("http://39.108.14.253:3000/a/register?" + rFuntext, )
+							.then((successCallback, errorCallback) => {
+								if(successCallback.data.code == "0000") {
 
-</body>
+								}
+							})
+					}
+				}
+			}
+		});
+	</script>
 
-</html>
+	</html>

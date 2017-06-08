@@ -1,0 +1,155 @@
+	html,
+	body,
+	div,
+	span,
+	iframe,
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6,
+	p,
+	blockquote,
+	pre,
+	a,
+	address,
+	big,
+	cite,
+	code,
+	del,
+	em,
+	font,
+	img,
+	ins,
+	small,
+	strong,
+	var,
+	b,
+	u,
+	i,
+	center,
+	dl,
+	dt,
+	dd,
+	ol,
+	ul,
+	li,
+	fieldset,
+	form,
+	label,
+	legend,
+	table,
+	ul,
+	li,
+	td,
+	tr {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		text-decoration: none;
+		font-style: normal;
+		color: inherit;
+	}
+	
+	body {
+		font-family: "微软雅黑";
+		background: #F7F7F7;
+		color: #73879C;
+	}
+	i {
+		color: red;
+		font-weight: normal;
+	}
+	.button{border-radius: 3px;
+	margin:5px auto;
+	color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;    display: block;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;    width: 150px;line-height: 30px;font-size: 16px;}
+	.header {
+		background: #EDEDED;
+		border-bottom: 1px solid #D9DEE4;
+		height: 50px;
+		width: 100%;
+		padding: 5px;
+	}
+	
+	.logo-box {
+		width: 110px;
+		height: 50px;
+		background-image: url(../img/logo.jpg);
+		background-size: 110px 50px;
+		float: left;
+	}
+	
+	.header-text {
+		width: 250px;
+		float: left;
+		text-align: center;
+		font-size: 28px;
+		font-weight: bold;
+		line-height: 50px;
+	}
+	
+	.content .input-box {
+		width: 400px;
+		margin: 10px auto;
+		background-color: #fff;
+		border: 1px solid #E6E9ED;
+		padding: 10px 5px;
+	}
+	
+	.content .input-box tr {
+		height: 60px;
+	}
+	
+	.sex-box label {
+		border: solid 1px #ccc;
+		font-size: 18px;
+		padding: 3px 6px;
+		border-radius: 4px;
+	}
+	
+	.input-name {
+		text-align: right;
+		padding-right: 10px;
+		font-size: 16px;
+		font-weight: bold;
+		margin-bottom: 10px;
+		width: 100px;
+	}
+	
+	input[type="text"],
+	input[type="number"],
+	input[type="email"],
+	input[type="password"] {
+		border-radius: 3px;
+		-ms-box-shadow: 0 1px 0 #fff, 0 -2px 5px rgba(0, 0, 0, 0.08) inset;
+		-o-box-shadow: 0 1px 0 #fff, 0 -2px 5px rgba(0, 0, 0, 0.08) inset;
+		box-shadow: 0 1px 0 #fff, 0 -2px 5px rgba(0, 0, 0, 0.08) inset;
+		border: 1px solid #c8c8c8;
+		color: #777;
+		margin: 0;
+		width: 90%;
+		height: 34px;
+		padding: 3px 6px;
+		font-size: 14px;
+	}
+	
+	
