@@ -120,7 +120,7 @@
 							"&sex=" + this.userdata.sex +
 							"&size=" + this.userdata.size.a+"and"+this.userdata.size.b+"and"+this.userdata.size.c+
 							"&job=" + this.userdata.job.a+"and"+this.userdata.job.b
-						this.$http.get("http://39.108.14.253:3000/a/register?" + rFuntext, )
+						this.$http.get("http://39.108.14.253:3000/a/register?" + rFuntext )
 							.then((successCallback, errorCallback) => {
 								if(successCallback.data.status == "0000") {
 									alert(successCallback.data.hint)
