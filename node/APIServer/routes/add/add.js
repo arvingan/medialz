@@ -28,9 +28,9 @@ router.get('/register', function(req, res, next) {
 					job: typeof(params.job) != "undefined" ? params.job : ""
 				}
 				//注册
-				var addSql = 'INSERT INTO users(Id,phone,name,sex,size,job) VALUES(0,?,?,?,?,?)';
-				var addSqlParams = [regiserData.phone, regiserData.name, regiserData.sex, regiserData.size, regiserData.job];
-				connection.query(addSql, addSqlParams, function(err, result) {
+				var addRSql = 'INSERT INTO users(Id,phone,name,sex,size,job) VALUES(0,?,?,?,?,?)';
+				var addRSqlParams = [regiserData.phone, regiserData.name, regiserData.sex, regiserData.size, regiserData.job];
+				connection.query(addRSql, addRSqlParams, function(err, result) {
 					if(result) {
 						var response = {
 							status: 0000,
@@ -41,7 +41,8 @@ router.get('/register', function(req, res, next) {
 						var response = {
 							status: 4000,
 							hint: "注册失败",
-							data:regiserData
+							data:regiserData,
+							err:err
 						};
 						res.send(JSON.stringify(response));
 
