@@ -111,12 +111,14 @@
 						rFuntext = "phone=" + this.userdata.phone +
 							"&name=" + this.userdata.name +
 							"&sex=" + this.userdata.sex +
-							"&size=" + JSON.stringify(this.userdata.size) +
-							"&jobs=" + JSON.stringify(this.userdata.job);
+							"&size=" + this.userdata.size.a+"/"+this.userdata.size.b+"/"+this.userdata.size.c+
+							"&job=" + this.userdata.job.a+"/"+this.userdata.job.b
 						this.$http.get("http://39.108.14.253:3000/a/register?" + rFuntext, )
 							.then((successCallback, errorCallback) => {
-								if(successCallback.data.code == "0000") {
-
+								if(successCallback.data.status == "0000") {
+									alert(successCallback.data.hint)
+								}else{
+									alert(successCallback.data.hint)
 								}
 							})
 					}

@@ -39,8 +39,9 @@ router.get('/register', function(req, res, next) {
 						res.send(JSON.stringify(response));
 					} else {
 						var response = {
-							status: 0000,
-							hint: "注册失败"
+							status: 4000,
+							hint: "注册失败",
+							data:regiserData.phone+"+"+regiserData.name
 						};
 						res.send(JSON.stringify(response));
 
