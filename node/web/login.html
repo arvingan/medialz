@@ -35,8 +35,8 @@
 		</div>
 
 		<div class="content" id="rapp">
-			<div class="input-box">
-				<table id="rbox" border="0" cellspacing="0" cellpadding="0">
+			<div class="input-box" id="rbox">
+				<table  border="0" cellspacing="0" cellpadding="0">
 					<tr>
 						<td class="input-name"><i>(必填)</i>手机号:</td>
 						<td><input type="number" v-model="userdata.phone" id="rphone" class="reInput" reInput="20;/^.{6,20}$/;请输入手机号" /></td>
@@ -83,10 +83,10 @@
 				<button type="button" class="button" V-on:click="qFun()">取号/查号</button>
 			</div>
 			<div class="input-box" id="queuenumber" style="display: none;">
-				<div id="" style="text-align: center;font-size: 20px;">
+				<div id="" style="text-align: center;font-size: 30px;">
 					{{userdata.name}}
 				</div>
-				<div style="text-align: center;font-size: 20px;">第<span style="font-size: 32px;font-weight: bold;color: red;">{{userdata.queuenumber}}</span>号</div>
+				<div style="text-align: center;font-size: 30px;">第<span style="font-size: 42px;font-weight: bold;color: red;">{{userdata.queuenumber}}</span>号</div>
 			</div>
 		</div>
 
@@ -136,10 +136,11 @@
 						})) {
 						qFuntext = "phone=" + this.userdata.phone +
 							"&sessionid=1"
-						this.$http.get("http://39.108.14.253:3000/a/join?" + qFuntext, )
+						this.$http.get("http://39.108.14.253:3000/a/join?" + qFuntext)
 							.then((successCallback, errorCallback) => {
 								if(successCallback.data.status == "0000") {
 									$("#queuenumber").show();
+									$("#rbox").hide();
 									name: "11",
 									this.userdata.name=successCallback.data.data.name;
 									this.userdata.queuenumber=successCallback.data.data.queuenumber;
