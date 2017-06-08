@@ -135,7 +135,7 @@
 							Inputobj: $('#rbox').find('.reInput')
 						})) {
 						qFuntext = "phone=" + this.userdata.phone +
-							"&sessionid=3"
+							"&sessionid=1"
 						this.$http.get("http://39.108.14.253:3000/a/join?" + qFuntext, )
 							.then((successCallback, errorCallback) => {
 								if(successCallback.data.status == "0000") {
