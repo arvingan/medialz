@@ -1,4 +1,6 @@
 $(function() {
+	window.apiUrl="http://39.108.14.253:3000";
+	//window.apiUrl="http://127.0.0.1:3000"
 	mbFun();
 	if($('.reInput').get(0)) {
 		RegExpInput.REIfun({
