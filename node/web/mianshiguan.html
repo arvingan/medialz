@@ -127,8 +127,7 @@
 						<tr>
 							<th>姓名(性别)</th>
 							<th>手机号</th>
-							<th>面试内容</th>
-							<th>三围</th>
+							<th>面试内容/三围</th>
 						</tr>
 						<!--job: "coser/"
 name: "111111"
@@ -140,8 +139,7 @@ size: "//"-->
 						<tr v-for="udata in sessionUser">
 							<td>{{udata.name}}(<span v-if="udata.sex==0">女</span><span v-if="udata.sex==1">男</span><span v-if="udata.sex==2">其他</span>)</td>
 							<td>{{udata.phone}}</td>
-							<td><span >{{udata.job}}</span></td>
-							<td><span v-if="udata.size!='//'">{{udata.size}}</span></td>
+							<td  style="text-align: center;"><span >{{udata.job}}</span><br /><span v-if="udata.size!='//'">{{udata.size}}</span></td>
 						</tr>
 					</table>
 				</div>
