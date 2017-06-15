@@ -83,5 +83,18 @@ router.get('/sessionUser', function(req, res, next) {
 		res.send(JSON.stringify(response));
 	}
 });
+//所有用户
+router.get('/allUser', function(req, res, next) {
+	var params = URL.parse(req.url, true).query;
+		connection.query('SELECT * FROM users' , function(err, results) {
+			var response = {
+				status: 0000,
+				data: results,
+				hint:"查询成功"
+			};
+			res.send(JSON.stringify(response));
+		})
 
+	
+});
 module.exports = router;

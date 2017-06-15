@@ -119,29 +119,32 @@
 				</div>
 			</div>
 			<div class="user-bg" style="display: none;">
-				<div class="input-box" style="width: 90%;margin: 5% auto 0;height: 90%;overflow: auto;">
+				<div class="input-box" style="width: 90%;margin: 5% auto 0;height: 90%;">
 					<div class="box-tit">
 						模特列表<span style="float: right;color: red;" V-on:click="qSessionUserOff()">关闭</span>
+						<div style="font-size: 14px;text-align: center;color: #333;margin-top: 5px;">
+							号码筛选<input type="text" style="width: 100px;height: 20px;line-height: 20px;" name="" id="" value="" v-model="ss.queuenumber" />
+						</div>
 					</div>
-					<table border="0" cellspacing="0" cellpadding="0" style="width: 90%;margin: auto;">
+					<div id="" style="width: 100%;margin: auto;height: 100%;overflow: auto;">
+						
+					
+					<table border="0" cellspacing="0" cellpadding="0" style="width: 100%;">
 						<tr>
+							<th></th>
 							<th>姓名(性别)</th>
 							<th>手机号</th>
 							<th>面试内容/三围</th>
 						</tr>
-						<!--job: "coser/"
-name: "111111"
-phone: "18017057702"
-queuenumber: "1"
-sessionid: 15
-sex: "0"
-size: "//"-->
-						<tr v-for="udata in sessionUser">
+						<!--udata.queuenumber.indexOf(ss.queuenumber)>0-->
+						<tr v-for="udata in sessionUser" class="tdbb" v-show="uqueuenumberlist(udata.queuenumber)">
+							<td style="padding: 0px 5px;color: #D63900;">{{udata.queuenumber}}</td>
 							<td>{{udata.name}}(<span v-if="udata.sex==0">女</span><span v-if="udata.sex==1">男</span><span v-if="udata.sex==2">其他</span>)</td>
-							<td>{{udata.phone}}</td>
-							<td  style="text-align: center;"><span >{{udata.job}}</span><br /><span v-if="udata.size!='//'">{{udata.size}}</span></td>
+							<td style="text-align: center;">{{udata.phone}}</td>
+							<td style="text-align: center;"><span >{{udata.job}}</span><br /><span v-if="udata.size!='//'">{{udata.size}}</span></td>
 						</tr>
 					</table>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -164,8 +167,15 @@ size: "//"-->
 				changciList: '',
 				changciEdit: '',
 				sessionUser: '',
+				ss:{
+					queuenumber:''
+				}
 			},
 			methods: {
+				uqueuenumberlist:function(queuenumber) {
+					console.log(queuenumber.indexOf(this.ss.queuenumber))
+					return queuenumber.indexOf(this.ss.queuenumber)>-1?true:false;
+				},
 				addSession: function() {
 					this.$http.post(window.apiUrl + "/a/addS", "json=" + JSON.stringify(this.changciData))
 						.then((successCallback, errorCallback) => {
