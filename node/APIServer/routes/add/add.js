@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var bodyParser = require('body-parser');
 //配置数据库
 var mysql = require('mysql');
 var config = require('../config/mysql');
@@ -41,8 +42,8 @@ router.get('/register', function(req, res, next) {
 						var response = {
 							status: 4000,
 							hint: "注册失败",
-							data:regiserData,
-							err:err
+							data: regiserData,
+							err: err
 						};
 						res.send(JSON.stringify(response));
 
@@ -61,6 +62,73 @@ router.get('/register', function(req, res, next) {
 		res.send(JSON.stringify(response));
 	}
 });
+
+//添加场次
+router.post('/addS', function(req, res, next) {
+	var params = JSON.parse(req.body.json) ;
+	if(typeof(params.sessionname) != "undefined" && typeof(params.type) != "undefined") {
+		params.sessiontime=typeof(params.sessiontime) != "undefined"?params.sessiontime:"null"
+		var addSql = 'INSERT INTO session(Id,sessionname,sessiontime,type) VALUES(0,?,?,?)';
+		//INSERT INTO `mojie`.`session` (`id`, `sessionname`, `sessiontime`, `type`) VALUES (NULL, '测试', '222', '1');
+		var addSqlParams = [params.sessionname,params.sessiontime,params.type];
+		connection.query(addSql, addSqlParams, function(err, result) {
+			if(result) {
+				var response = {
+					status: 0000,
+					data: result,
+					hint: "添加成功"
+				};
+				res.send(JSON.stringify(response));
+			} else {
+				var response = {
+					status: 0000,
+					hint: "添加失败"
+				};
+				res.send(JSON.stringify(response));
+
+			}
+		});
+	} else {
+		var response = {
+			data:params,
+			status: 4000,
+			hint: '参数错误'
+		};
+		res.send(JSON.stringify(response));
+	}
+})
+//编辑场次
+router.post('/editS', function(req, res, next) {
+	var params = JSON.parse(req.body.json) ;
+	if(typeof(params.sessionname) != "undefined" && typeof(params.type) != "undefined") {
+		params.sessiontime=typeof(params.sessiontime) != "undefined"?params.sessiontime:"null"
+		var addSql = 'UPDATE session SET sessionname = ?,sessiontime = ?,type=? WHERE id = ?';
+		var addSqlParams = [params.sessionname,params.sessiontime,params.type,params.id];
+		connection.query(addSql, addSqlParams, function(err, result) {
+			if(result) {
+				var response = {
+					status: 0000,
+					data: result,
+					hint: "修改成功"
+				};
+				res.send(JSON.stringify(response));
+			} else {
+				var response = {
+					status: 0000,
+					hint: "修改失败"
+				};
+				res.send(JSON.stringify(response));
+			}
+		});
+	} else {
+		var response = {
+			data:params,
+			status: 4000,
+			hint: '参数错误'
+		};
+		res.send(JSON.stringify(response));
+	}
+})
 //参加
 //http://127.0.0.1:3000/a/join?phone=02&sessionid=2
 router.get('/join', function(req, res, next) {

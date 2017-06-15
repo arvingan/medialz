@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width">
+		<meta name="MobileOptimized" content="420">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta name="screen-orientation" content="portrait">
+		<meta name="x5-orientation" content="portrait">
+		<meta name="renderer" content="webkit">
+		<meta content="telephone=no" name="format-detection">
+		<title>编辑</title>
+		<link rel="stylesheet" href="styles/css/public.css" />
+		<link rel="stylesheet" href="lib/dialog/ui-dialog.css" />
+		<script type="text/javascript" src="lib/jq/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="lib/vue/vue.js"></script>
+		<script type="text/javascript" src="lib/vue/vue-resource.js"></script>
+		<script type="text/javascript" src="styles/js/config.js"></script>
+		<script type="text/javascript" src="lib/dialog/dialog-plus-min.js"></script>
+		<script type="text/javascript" src="lib/dialog/dialog-fun.js"></script>
+	</head>
+
+	<body>
+
+		<div class="header">
+			<div class="logo-box"></div>
+			<div class="header-text">
+				场次管理
+			</div>
+		</div>
+		<div class="content" id="cjapp">
+			<div class="input-box">
+				<div class="box-tit">
+					添加场次
+				</div>
+				<table border="0" cellspacing="0" cellpadding="0" style="width: 90%;margin: auto;">
+					<tr>
+						<td>场次名称</td>
+						<td><input type="text" v-model="changciData.sessionname" id="rname" class="reInput" reInput="20;/^.{1,20}$/;请输入姓名" /></td>
+					</tr>
+					<tr>
+						<td>场次备注</td>
+						<td><input type="text" v-model="changciData.sessiontime" id="rname" class="reInput" reInput="20;/^.{1,20}$/;请输入姓名" /></td>
+					</tr>
+					<tr>
+						<td>场次状态</td>
+						<td>
+							<label><input type="radio" name="changci" value="1" v-model="changciData.type" />开启</label>
+							<label><input type="radio" name="changci" value="0" v-model="changciData.type" />关闭</label>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2"><button type="button" class="button" V-on:click="addSession()">添加</button></td>
+
+					</tr>
+				</table>
+			</div>
+			<div class="input-box">
+				<div class="box-tit">
+					历届场次列表
+				</div>
+				<table border="0" cellspacing="0" cellpadding="0" style="width: 100%;">
+					<thead>
+						<tr>
+							<th>名称<span style="font-size: 12px;">(备注)</span></th>
+							<th>状态</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr v-for="listData in changciList" style="text-align: center;">
+							<td V-on:click="qSessionUser(listData.id)">{{listData.sessionname}}<br /><span style="font-size: 12px;">{{listData.sessiontime}}(查询模特)</span></td>
+							<td><span v-if="listData.type==1" style="color: #0A8438;font-weight: bold;padding: 5px;">开启</span>
+								<span v-if="listData.type==0" style="color: #999;font-weight: bold;padding: 5px;">关闭</span>
+							</td>
+							<td width="100px">
+								<div class="button" style="    width: 30px;padding: 0px 10px;margin:10px auto;" V-on:click="editBox(listData)">编辑</div>
+							</td>
+						</tr>
+					</tbody>
+
+				</table>
+			</div>
+
+			<div class="editBox-bg" style="display: none;">
+				<div class="input-box" style="width: 90%;margin: 50px auto 0;">
+					<div class="box-tit">
+						编辑场次
+					</div>
+					<table border="0" cellspacing="0" cellpadding="0" style="width: 90%;margin: auto;">
+						<tr>
+							<td>场次名称</td>
+							<td><input type="text" v-model="changciEdit.sessionname" id="rname" class="reInput" reInput="20;/^.{1,20}$/;请输入姓名" /></td>
+						</tr>
+						<tr>
+							<td>场次备注</td>
+							<td><input type="text" v-model="changciEdit.sessiontime" id="rname" class="reInput" reInput="20;/^.{1,20}$/;请输入姓名" /></td>
+						</tr>
+						<tr>
+							<td>场次状态</td>
+							<td>
+								<label><input type="radio" name="changci" value="1" v-model="changciEdit.type" />开启</label>
+								<label><input type="radio" name="changci" value="0" v-model="changciEdit.type" />关闭</label>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<button type="button" class="button" V-on:click="editSession()">编辑</button>
+								<button type="button" class="button" V-on:click="editBoxOff()" style="background-color: #999;">取消编辑</button>
+							</td>
+
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="user-bg" style="display: none;">
+				<div class="input-box" style="width: 90%;margin: 5% auto 0;height: 90%;overflow: auto;">
+					<div class="box-tit">
+						模特列表<span style="float: right;color: red;" V-on:click="qSessionUserOff()">关闭</span>
+					</div>
+					<table border="0" cellspacing="0" cellpadding="0" style="width: 90%;margin: auto;">
+						<tr>
+							<th>姓名(性别)</th>
+							<th>手机号</th>
+							<th>面试内容</th>
+							<th>三围</th>
+						</tr>
+						<!--job: "coser/"
+name: "111111"
+phone: "18017057702"
+queuenumber: "1"
+sessionid: 15
+sex: "0"
+size: "//"-->
+						<tr v-for="udata in sessionUser">
+							<td>{{udata.name}}(<span v-if="udata.sex==0">女</span><span v-if="udata.sex==1">男</span><span v-if="udata.sex==2">其他</span>)</td>
+							<td>{{udata.phone}}</td>
+							<td><span >{{udata.job}}</span></td>
+							<td><span v-if="udata.size!='//'">{{udata.size}}</span></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<br>
+
+	</body>
+	<script>
+		var d = new Date()
+		Vue.http.options.headers = {
+			'Content-Type': 'application/x-www-form-urlencoded'
+		};
+		var loginApp = new Vue({
+			el: "#cjapp",
+			data: {
+				changciData: {
+					sessionname: (d.getMonth() * 1 + 1) + '月' + d.getDate() + '日',
+					sessiontime: "",
+					type: 1
+				},
+				changciList: '',
+				changciEdit: '',
+				sessionUser: '',
+			},
+			methods: {
+				addSession: function() {
+					this.$http.post(window.apiUrl + "/a/addS", "json=" + JSON.stringify(this.changciData))
+						.then((successCallback, errorCallback) => {
+
+							if(successCallback.data.status == "0000") {
+								alert(successCallback.data.hint);
+								this.qSession()
+							} else {
+								alert(successCallback.data.hint);
+							}
+						})
+				},
+				editSession: function() {
+					this.$http.post(window.apiUrl + "/a/editS", "json=" + JSON.stringify(this.changciEdit))
+						.then((successCallback, errorCallback) => {
+
+							if(successCallback.data.status == "0000") {
+								alert(successCallback.data.hint);
+								this.qSession();
+								this.editBoxOff();
+							} else {
+								alert(successCallback.data.hint);
+							}
+						})
+				},
+				editBox: function(data) {
+					$(".editBox-bg").show();
+					this.changciEdit = data;
+
+				},
+				editBoxOff: function() {
+					$(".editBox-bg").hide();
+					this.changciEdit = "";
+				},
+				qSession: function() {
+					this.$http.get(window.apiUrl + "/q/session?type=10")
+						.then((successCallback, errorCallback) => {
+							if(successCallback.data.status == "0000") {
+								this.changciList = successCallback.data.data;
+								console.log(this.sessiondata);
+							} else {
+								alert(successCallback.data.hint);
+							}
+						})
+				},
+				qSessionUser: function(qid) {
+					this.$http.get(window.apiUrl + "/q/sessionUser?sessionid=" + qid)
+						.then((successCallback, errorCallback) => {
+							if(successCallback.data.status == "0000") {
+								this.sessionUser = successCallback.data.data;
+								console.log(this.sessiondata);
+								if(this.sessionUser.length>0){
+									$(".user-bg").show();
+								}else{
+									alert('没有模特参加')
+								}
+								
+							} else {
+								alert(successCallback.data.hint);
+							}
+						})
+				},
+				qSessionUserOff: function() {
+					$(".user-bg").hide();
+					this.sessionUser = "";
+				},
+			},
+			mounted() {
+				this.qSession()
+			}
+		})
+	</script>
+
+</html>

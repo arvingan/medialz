@@ -30,13 +30,47 @@
 		<div class="header">
 			<div class="logo-box"></div>
 			<div class="header-text">
-				XX排号系统
+				面试排号系统
 			</div>
 		</div>
+		<div id="loding" style="text-align: center;line-height: 50px;margin-bottom: 200px;margin-top: 200px;background-color: #fff;">
+			加载中...<br />请保证网络畅通
+		</div>
+		<div class="content" id="rapp" style="display: none;">
+			<div class="input-box" id="queuenumber" v-show="userdata.queuenumber!=''">
+				<div id="" style="text-align: center;font-size: 30px;">
+					<div style="background-color:red;font-size: 24px;font-weight: bold;text-align: center;display: inline-block;padding: 5px 10px;color: #fff;margin-bottom: 10px;">{{userdata.sessionname}}</div>
+					<br /> 姓名:{{userdata.name}}
+				</div>
+				<div style="text-align: center;font-size: 50px;"><span style="font-size: 142px;font-weight: bold;color: red;">{{userdata.queuenumber}}</span>号</div>
 
-		<div class="content" id="rapp">
+			</div>
+			<div class="input-box" v-show="sessiondata!=''">
+				<div class="box-tit">
+					面试取号/查号
+				</div>
+				<div id="">
+					<div v-for="(sdata,index) in sessiondata">
+						<label style="line-height: 40px;font-size: 18px;"><input type="radio" name="session" :value="index" v-model="userdata.session" />{{sdata.sessionname}} <span v-show="sdata.sessiontime!=''" style="font-size: 14px;">（{{sdata.sessiontime}}）</span></label>
+					</div>
+
+				</div>
+				<table id="qbox" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td class="input-name"><i>(必填)</i>手机号:</td>
+						<td><input type="number" v-model="userdata.phone" id="qphone" class="reInput" reInput="20;/^.{6,20}$/;请输入手机号" /></td>
+					</tr>
+				</table>
+				<button type="button" class="button" V-on:click="qFun()">取号/查号</button>
+			</div>
+			<div class="input-box" v-show="sessiondata==''">
+				暂无面试场次
+			</div>
 			<div class="input-box" id="rbox" v-show="userdata.queuenumber==''">
-				<table  border="0" cellspacing="0" cellpadding="0">
+				<div class="box-tit">
+					首次使用,请登记
+				</div>
+				<table border="0" cellspacing="0" cellpadding="0">
 					<tr>
 						<td class="input-name"><i>(必填)</i>手机号:</td>
 						<td><input type="number" v-model="userdata.phone" id="rphone" class="reInput" reInput="20;/^.{6,20}$/;请输入手机号" /></td>
@@ -46,7 +80,7 @@
 						<td><input type="text" v-model="userdata.name" id="rname" class="reInput" reInput="20;/^.{1,20}$/;请输入姓名" /></td>
 					</tr>
 					<tr>
-						<td class="input-name">(必填)性别:</td>
+						<td class="input-name"><i>(必填)</i>性别:</td>
 						<td class="sex-box">
 							<label><input type="radio" name="sex" value="0" v-model="userdata.sex" />女</label>
 							<label><input type="radio" name="sex" value="1" v-model="userdata.sex" />男</label>
@@ -72,30 +106,9 @@
 				</table>
 				<button type="button" class="button" V-on:click="rFun()">登记信息</button>
 			</div>
+
 			<div V-on:click="rShow()" v-show="userdata.queuenumber!=''" style="width: 100px;margin: 20px auto;text-align: center;font-size: 20px;border: solid 1px #666;border-radius:6px;">
-					注册
-				</div>
-			<div class="input-box" v-show="userdata.session!=''">
-				<div id="">
-					<label v-for="sdata in sessiondata"><input type="radio" name="session" :value="sdata.id" v-model="userdata.session" />{{sdata.sessionname}} <span>（{{sdata.sessiontime}}）</span></label>
-				</div>
-				<table id="qbox" border="0" cellspacing="0" cellpadding="0">
-					<tr>
-						<td class="input-name"><i>(必填)</i>手机号:</td>
-						<td><input type="number" v-model="userdata.phone" id="qphone" class="reInput" reInput="20;/^.{6,20}$/;请输入手机号" /></td>
-					</tr>
-				</table>
-				<button type="button" class="button" V-on:click="qFun()">取号/查号</button>
-			</div>
-			<div class="input-box" v-show="userdata.session==''">
-				暂无面试场次
-			</div>
-			<div class="input-box" id="queuenumber"  v-show="userdata.queuenumber!=''">
-				<div id="" style="text-align: center;font-size: 30px;">
-					{{userdata.name}}
-				</div>
-				<div style="text-align: center;font-size: 50px;"><span style="font-size: 142px;font-weight: bold;color: red;">{{userdata.queuenumber}}</span>号</div>
-				
+				注册
 			</div>
 		</div>
 
@@ -110,34 +123,44 @@
 			el: "#rapp",
 			data: {
 				userdata: {
-					phone:getCookieValue("phone"),
+					phone: getCookieValue("phone"),
 					name: getCookieValue("name"),
 					sex: "0",
-					size: { a: '', b: '', c: '' },
-					job: { a: '', b: '' },
-					queuenumber:getCookieValue("queuenumber"),
-					session:"",
-					
+					size: {
+						a: '',
+						b: '',
+						c: ''
+					},
+					job: {
+						a: '',
+						b: ''
+					},
+					queuenumber: getCookieValue("queuenumber"),
+					session: 0,
+					sessionname: getCookieValue("sessionname"),
+
 				},
-				sessiondata:""
+				sessiondata: ""
 
 			},
 			methods: {
 				rFun: function() {
 					if(RegExpInput.eachREIfunTF({
 							Inputobj: $('#rbox').find('.reInput')
-					})) {
+						})) {
+						var rjoba = this.userdata.job.a ? 'coser/' : '';
+						var rjobb = this.userdata.job.b ? 'showgirl/' : '';
 						rFuntext = "phone=" + this.userdata.phone +
 							"&name=" + this.userdata.name +
 							"&sex=" + this.userdata.sex +
-							"&size=" + this.userdata.size.a+"and"+this.userdata.size.b+"and"+this.userdata.size.c+
-							"&job=" + this.userdata.job.a+"and"+this.userdata.job.b;
-						this.$http.get(window.apiUrl+"/a/register?" + rFuntext)
+							"&size=" + this.userdata.size.a + "/" + this.userdata.size.b + "/" + this.userdata.size.c +
+							"&job=" + rjoba + rjobb
+						this.$http.get(window.apiUrl + "/a/register?" + rFuntext)
 							.then((successCallback, errorCallback) => {
 								if(successCallback.data.status == "0000") {
 									alert(successCallback.data.hint);
-									setCookie("phone",this.userdata.phone,"365","/");
-								}else{
+									setCookie("phone", this.userdata.phone, "365", "/");
+								} else {
 									alert(successCallback.data.hint)
 								}
 							})
@@ -148,41 +171,46 @@
 							Inputobj: $('#qbox').find('.reInput')
 						})) {
 						qFuntext = "phone=" + this.userdata.phone +
-							"&sessionid="+this.userdata.session;
-						this.$http.get(window.apiUrl+"/a/join?" + qFuntext)
+							"&sessionid=" + this.sessiondata[this.userdata.session].id;
+						this.$http.get(window.apiUrl + "/a/join?" + qFuntext)
 							.then((successCallback, errorCallback) => {
 								if(successCallback.data.status == "0000") {
 									$("#queuenumber").show();
 									$("#rbox").hide();
-									this.userdata.name=successCallback.data.data.name;
-									this.userdata.queuenumber=successCallback.data.data.queuenumber;
-									setCookie("phone",this.userdata.phone,"365","/");
-									setCookie("name",this.userdata.name,"365","/");
-									setCookie("queuenumber",this.userdata.queuenumber,"0.5","/");
-								}else{
+									this.userdata.name = successCallback.data.data.name;
+									this.userdata.queuenumber = successCallback.data.data.queuenumber;
+									setCookie("phone", this.userdata.phone, "365", "/");
+									setCookie("name", this.userdata.name, "365", "/");
+									setCookie("queuenumber", this.userdata.queuenumber, "0.5", "/");
+
+									this.userdata.sessionname = this.sessiondata[this.userdata.session].sessionname;
+									setCookie("sessionname", this.userdata.sessionname, "0.5", "/");
+
+								} else {
 									alert(successCallback.data.hint);
 								}
 							})
 					}
 				},
-				rShow:function(){
-					this.userdata.queuenumber="";
+				rShow: function() {
+					this.userdata.queuenumber = "";
 				},
-				qSession:function(){
-					this.$http.get(window.apiUrl+"/q/session?type=1")
-							.then((successCallback, errorCallback) => {
-								if(successCallback.data.status == "0000") {
-									this.sessiondata=successCallback.data.data;
-									this.userdata.session=this.sessiondata[0].id
-									console.log(this.sessiondata)
-								}else{
-									alert(successCallback.data.hint);
-								}
-							})
+				qSession: function() {
+					this.$http.get(window.apiUrl + "/q/session?type=1")
+						.then((successCallback, errorCallback) => {
+							if(successCallback.data.status == "0000") {
+								this.sessiondata = successCallback.data.data;
+								console.log(this.sessiondata);
+								$('#loding').hide();
+								$('#rapp').show();
+							} else {
+								alert(successCallback.data.hint);
+							}
+						})
 				}
 			},
-			mounted(){
-				//this.qSession()
+			mounted() {
+				this.qSession()
 			}
 		});
 	</script>
