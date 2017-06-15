@@ -2,7 +2,7 @@ module.exports = {
   mysqlConfig: {
   host: 'localhost',
 	user: 'root',
-	password: '',
+	password: 'p89524q',
 	database: 'mojie'
   }
 };
